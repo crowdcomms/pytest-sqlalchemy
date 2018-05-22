@@ -49,8 +49,7 @@ You can install "pytest-sqlalchemy" via `pip`_ from `GitHub`_::
 Usage
 -----
 
-You need to provide a couple of fixtures to inject your sqlalchemy Base and Session classes ( the ones your regular app uses ). eg:
-
+You need to provide a couple of fixtures to inject your sqlalchemy Base and Session classes ( the ones your regular app uses ). eg::
 
     # my_project/tests/conftest.py
     
