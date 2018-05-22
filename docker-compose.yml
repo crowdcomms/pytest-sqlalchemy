@@ -1,0 +1,20 @@
+version: '2'
+services:
+  db:
+    image: postgres:9.6-alpine
+    environment:
+      - POSTGRES_PASSWORD=1234
+      - POSTGRES_USER=mable
+      - POSTGRES_DB=mable
+
+  pytest-sqlalchemy:
+    image: crowdcomms/pytest-sqlalchemy
+    build:
+      context: .
+    volumes:
+      - .:/code
+    working_dir: /code
+    environment:
+      - DATABASE_URL=postgres://mable:1234@db:5432/mable
+    links:
+      - db:db
