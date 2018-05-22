@@ -51,6 +51,7 @@ Usage
 
 You need to provide a couple of fixtures to inject your sqlalchemy Base and Session classes ( the ones your regular app uses ). eg:
 
+
     # my_project/tests/conftest.py
     
     from my_app.db import Base, Session
@@ -62,6 +63,7 @@ You need to provide a couple of fixtures to inject your sqlalchemy Base and Sess
     @pytest.fixture(scope='session')
     def sqlalchemy_session():
         return Session
+
 
 Contributing
 ------------
