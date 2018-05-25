@@ -181,4 +181,4 @@ def db_session(request, connection, sqlalchemy_session, monkeypatch):
     def finalize():
         sqlalchemy_session.rollback()
 
-    return sqlalchemy_session
+    return sqlalchemy_session()
