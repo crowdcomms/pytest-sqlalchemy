@@ -158,14 +158,12 @@ def sqlalchemy_session():
 
 
 @pytest.fixture(scope='session')
-def connection(test_engine, sqlalchemy_base, sqlalchemy_session):
+def connection(request, test_engine, sqlalchemy_base, sqlalchemy_session):
 
     sqlalchemy_base.metadata.bind = test_engine
     sqlalchemy_base.metadata.create_all(test_engine)
 
     with test_engine.connect() as conn:
-        sqlalchemy_session.registry.clear()
-        sqlalchemy_session.configure(bind=conn)
         yield conn
 
     sqlalchemy_base.metadata.drop_all()
@@ -174,11 +172,11 @@ def connection(test_engine, sqlalchemy_base, sqlalchemy_session):
 @pytest.fixture
 def db_session(request, connection, sqlalchemy_session, monkeypatch):
 
-    monkeypatch.setattr(sqlalchemy_session, 'commit', sqlalchemy_session.flush)
-    monkeypatch.setattr(sqlalchemy_session, 'remove', lambda: None)
+    transaction = connection.begin()
+    sqlalchemy_session.bind = connection
 
-    @request.addfinalizer
-    def finalize():
-        sqlalchemy_session.rollback()
+    yield sqlalchemy_session
 
-    return sqlalchemy_session()
+    transaction.rollback()
+    sqlalchemy_session.close()
+

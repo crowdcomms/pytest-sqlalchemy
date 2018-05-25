@@ -5,10 +5,13 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
 import os
 
-Base = declarative_base()
-Session = scoped_session(sessionmaker(expire_on_commit=False))
 engine = create_engine(os.environ['DATABASE_URL'])
-Session.configure(bind=engine)
+
+Base = declarative_base(bind=engine)
+
+Session = sessionmaker(expire_on_commit=False, bind=engine)
+
+session = Session()
 
 
 class User(Base):
