@@ -3,8 +3,8 @@
 def test_db_prefix_fixture(testdir):
 
     testdir.makepyfile("""
-        def test_dbprefix(db_prefix):
-            assert db_prefix == "test"
+        def test_dbprefix(test_db_prefix):
+            assert test_db_prefix == "test_"
     """)
 
     result = testdir.runpytest(
