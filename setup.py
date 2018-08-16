@@ -13,7 +13,7 @@ def read(fname):
 
 setup(
     name='pytest-sqlalchemy',
-    version='0.1.0',
+    version='0.2.0',
     author='Ben Harling',
     author_email='bharling@crowdcomms.co.uk',
     maintainer='Ben Harling',

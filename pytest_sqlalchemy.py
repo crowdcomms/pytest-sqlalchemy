@@ -49,7 +49,7 @@ def test_db(database_url, test_database_url):
     conn.execute('ROLLBACK')
 
     try:
-        conn.execute(f"DROP DATABASE {test_database_url.database}")
+        conn.execute("DROP DATABASE {}".format(test_database_url.database))
     except ProgrammingError:
         pass
     finally:
